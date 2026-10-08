@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+*.sqlite
+*.sqlite3
+.env
+.env.*
+
+# Keep the sample uploaded assets but ignore generated local DBs
+pidr_database.sqlite

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicPulse | Public Infrastructure Damage Reporting System</title>
+  <!-- Leaflet CSS for Maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="header-container">
+      <div class="logo-area">
+        <div class="logo-icon"><i class="fa-solid fa-road-barrier"></i></div>
+        <div class="logo-title">
+          <h1>CivicPulse PIDR</h1>
+          <p>Public Infrastructure Damage Reporting & Triage System (Unified Mentor)</p>
+        </div>
+      </div>
+      <nav class="nav-tabs" id="navTabs">
+        <button class="nav-btn active" data-tab="tab-report"><i class="fa-solid fa-bullhorn"></i> Report Damage</button>
+        <button class="nav-btn" data-tab="tab-track"><i class="fa-solid fa-magnifying-glass-location"></i> Track Ticket</button>
+        <button class="nav-btn" data-tab="tab-map"><i class="fa-solid fa-map-location-dot"></i> Live Map</button>
+        <button class="nav-btn" data-tab="tab-authority"><i class="fa-solid fa-building-columns"></i> Authority Portal</button>
+        <button class="nav-btn" data-tab="tab-analytics"><i class="fa-solid fa-chart-pie"></i> Analytics & KPIs</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+
+    <!-- TAB 1: CITIZEN REPORT DAMAGE -->
+    <section id="tab-report" class="tab-pane active">
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fa-solid fa-circle-exclamation text-primary"></i> Citizen Infrastructure Incident Report</h2>
+          <span class="badge badge-submitted">Public Intake Form</span>
+        </div>
+        <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 1.5rem;">
+          Report civic infrastructure hazards such as potholes, non-functional streetlights, ruptured water pipes, or open drains with exact geo-coordinates and photographic evidence.
+        </p>
+
+        <form id="reportForm" enctype="multipart/form-data">
+          <div class="grid-2">
+            <!-- Left Column: Details & Categorization -->
+            <div>
+              <div class="form-group">
+                <label for="category"><i class="fa-solid fa-layer-group"></i> Infrastructure Category *</label>
+                <select id="category" name="category" class="form-control" required>
+                  <option value="" disabled selected>-- Select Damage Type --</option>
+                  <option value="Pothole">Pothole / Road Surface Damage (PWD)</option>
+                  <option value="Broken Footpath">Broken Footpath / Pavement (PWD)</option>
+                  <option value="Broken Streetlight">Broken Streetlight / Dark Spot (MCED)</option>
+                  <option value="Exposed Wiring">Exposed Electric Cable / Transformer Hazard (MCED)</option>
+                  <option value="Water Leakage">Water Pipeline Leak / Burst (Jal Board)</option>
+                  <option value="Open Drain">Open Storm Drain / Sewer Overflow (Jal Board)</option>
+                  <option value="Garbage Dump">Illegal Waste Dumping / Overflowing Bin (Sanitation)</option>
+                  <option value="Fallen Tree">Fallen Tree / Road Obstruction (Sanitation)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label><i class="fa-solid fa-triangle-exclamation"></i> Severity Level *</label>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                  <label style="cursor: pointer; display: flex; align-items: center; gap: 0.3rem;">
+                    <input type="radio" name="severity" value="Low"> <span class="badge badge-low">Low (Minor)</span>
+                  </label>
+                  <label style="cursor: pointer; display: flex; align-items: center; gap: 0.3rem;">
+                    <input type="radio" name="severity" value="Medium" checked> <span class="badge badge-medium">Medium</span>
+                  </label>
+                  <label style="cursor: pointer; display: flex; align-items: center; gap: 0.3rem;">
+                    <input type="radio" name="severity" value="High"> <span class="badge badge-high">High</span>
+                  </label>
+                  <label style="cursor: pointer; display: flex; align-items: center; gap: 0.3rem;">
+                    <input type="radio" name="severity" value="Critical"> <span class="badge badge-critical">Critical (Life Risk)</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="title"><i class="fa-solid fa-heading"></i> Incident Title *</label>
+                <input type="text" id="title" name="title" class="form-control" placeholder="e.g. Deep pothole causing skid hazard" required>
+              </div>
+
+              <div class="form-group">
+                <label for="description"><i class="fa-solid fa-align-left"></i> Detailed Description *</label>
+                <textarea id="description" name="description" class="form-control" placeholder="Describe the damage severity, nearby landmarks, or impact on commuters..." rows="3" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="ward_id"><i class="fa-solid fa-landmark"></i> Municipal Ward *</label>
+                <select id="ward_id" name="ward_id" class="form-control" required>
+                  <option value="1">Ward 101 - Connaught Place (Central Zone)</option>
+                  <option value="2">Ward 102 - Rohini Sector 9 (North-West Zone)</option>
+                  <option value="3">Ward 103 - Dwarka Sector 12 (South-West Zone)</option>
+                  <option value="4">Ward 104 - Saket & South Ext (South Zone)</option>
+                  <option value="5">Ward 105 - Karol Bagh (West Zone)</option>
+                  <option value="6">Ward 106 - Laxmi Nagar (East Zone)</option>
+                </select>
+              </div>
+
+              <div class="grid-2" style="margin-top: 1rem;">
+                <div class="form-group">
+                  <label for="reporter_name">Your Full Name *</label>
+                  <input type="text" id="reporter_name" name="reporter_name" class="form-control" placeholder="Ravi Kumar" required>
+                </div>
+                <div class="form-group">
+                  <label for="reporter_phone">Mobile Number *</label>
+                  <input type="tel" id="reporter_phone" name="reporter_phone" class="form-control" placeholder="+91 98765 43210" required>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Location & Photo Upload -->
+            <div>
+              <div class="form-group">
+                <label><i class="fa-solid fa-map-pin"></i> Pinpoint Location on Map *</label>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <button type="button" id="btnDetectLocation" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">
+                    <i class="fa-solid fa-location-crosshairs"></i> Use My GPS Location
+                  </button>
+                  <span id="locStatus" style="font-size: 0.85rem; color: #64748b; align-self: center;">Click map or drag pin</span>
+                </div>
+                <div id="reportMap"></div>
+                <div class="grid-2" style="margin-top: 0.5rem;">
+                  <input type="text" id="latitude" name="latitude" class="form-control" placeholder="Latitude" readonly required value="28.6139">
+                  <input type="text" id="longitude" name="longitude" class="form-control" placeholder="Longitude" readonly required value="77.2090">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="address_text"><i class="fa-solid fa-location-dot"></i> Street Address / Landmark *</label>
+                <input type="text" id="address_text" name="address_text" class="form-control" placeholder="Auto-populated or enter nearest street address..." required value="Near Central Park, Connaught Place, New Delhi">
+              </div>
+
+              <div class="form-group">
+                <label><i class="fa-solid fa-camera"></i> Photographic Evidence *</label>
+                <div class="upload-dropzone" id="dropzone">
+                  <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2rem; color: #3b82f6; margin-bottom: 0.5rem;"></i>
+                  <p style="font-size: 0.9rem; font-weight: 600;">Click to upload or drag photo here</p>
+                  <p style="font-size: 0.75rem; color: #94a3b8;">Supports JPG, PNG, WebP (Max 5MB)</p>
+                  <input type="file" id="photoInput" name="photo" accept="image/*" style="display: none;">
+                </div>
+                <div class="preview-container" id="previewContainer" style="display: none;">
+                  <img id="imagePreview" class="preview-img" src="" alt="Damage Preview">
+                  <div>
+                    <span id="previewName" style="font-size: 0.85rem; font-weight: 600;">image.jpg</span>
+                    <button type="button" id="btnRemovePhoto" style="display: block; color: #ef4444; background: none; border: none; font-size: 0.8rem; cursor: pointer; margin-top: 0.3rem;">Remove</button>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 1.5rem; text-align: right;">
+                <button type="submit" id="btnSubmitReport" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+                  <i class="fa-solid fa-paper-plane"></i> Submit Incident Report
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 2: CITIZEN TRACK TICKET -->
+    <section id="tab-track" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fa-solid fa-timeline text-primary"></i> Track Public Infrastructure Complaint</h2>
+          <span class="badge badge-acknowledged">Citizen Transparency Portal</span>
+        </div>
+
+        <div style="max-width: 600px; margin: 0 auto 1.5rem;">
+          <div style="display: flex; gap: 0.5rem;">
+            <input type="text" id="trackSearchInput" class="form-control" placeholder="Enter Ticket Number (e.g. PIDR-2026-0001)" value="PIDR-2026-0001">
+            <button type="button" id="btnSearchTicket" class="btn btn-primary"><i class="fa-solid fa-search"></i> Track</button>
+          </div>
+          <div style="margin-top: 0.75rem; font-size: 0.85rem; color: #64748b;">
+            Sample Active Tickets:
+            <button class="chip-btn" data-tkt="PIDR-2026-0001">PIDR-2026-0001</button>
+            <button class="chip-btn" data-tkt="PIDR-2026-0002">PIDR-2026-0002 (Resolved)</button>
+            <button class="chip-btn" data-tkt="PIDR-2026-0003">PIDR-2026-0003</button>
+            <button class="chip-btn" data-tkt="PIDR-2026-0004">PIDR-2026-0004</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Tracking Display Container -->
+        <div id="trackResultContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: LIVE INCIDENT MAP -->
+    <section id="tab-map" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fa-solid fa-map-location-dot text-primary"></i> Municipal Geographic Incident Grid</h2>
+          <div>
+            <select id="mapFilterCategory" class="form-control" style="display: inline-block; width: auto; font-size: 0.85rem; padding: 0.4rem 0.8rem;">
+              <option value="All">All Categories</option>
+              <option value="Pothole">Potholes</option>
+              <option value="Broken Streetlight">Streetlights</option>
+              <option value="Water Leakage">Water Leaks</option>
+              <option value="Open Drain">Open Drains</option>
+            </select>
+            <select id="mapFilterStatus" class="form-control" style="display: inline-block; width: auto; font-size: 0.85rem; padding: 0.4rem 0.8rem; margin-left: 0.5rem;">
+              <option value="All">All Statuses</option>
+              <option value="Submitted">Submitted</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </div>
+        </div>
+        <div id="liveMap"></div>
+        <div style="margin-top: 1rem; display: flex; gap: 1.5rem; font-size: 0.85rem; color: #475569; flex-wrap: wrap;">
+          <span><i class="fa-solid fa-circle text-danger" style="color: #ef4444;"></i> Critical / High Severity</span>
+          <span><i class="fa-solid fa-circle text-warning" style="color: #f59e0b;"></i> In Progress / Medium</span>
+          <span><i class="fa-solid fa-circle text-success" style="color: #10b981;"></i> Resolved / Repaired</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: AUTHORITY OPERATIONS PORTAL -->
+    <section id="tab-authority" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fa-solid fa-building-user text-primary"></i> Municipal Department Dispatch & Triage Desk</h2>
+          <span class="badge badge-critical"><i class="fa-solid fa-shield-halved"></i> Official Triage Desk</span>
+        </div>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem;">
+          <select id="authFilterDept" class="form-control" style="width: auto;">
+            <option value="">All Departments</option>
+            <option value="1">Public Works Department (PWD)</option>
+            <option value="2">Municipal Electricity Division (MCED)</option>
+            <option value="3">Delhi Jal Board (DJB)</option>
+            <option value="4">Solid Waste Management (MSWM)</option>
+          </select>
+          <select id="authFilterStatus" class="form-control" style="width: auto;">
+            <option value="">All Statuses</option>
+            <option value="Submitted">Submitted (Pending Triage)</option>
+            <option value="Acknowledged">Acknowledged</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+          </select>
+          <input type="text" id="authSearch" class="form-control" placeholder="Search ticket, title, or road..." style="flex: 1; min-width: 200px;">
+          <button type="button" id="btnRefreshAuthority" class="btn btn-secondary"><i class="fa-solid fa-rotate"></i> Refresh</button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table" id="authorityTable">
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Category</th>
+                <th>Severity</th>
+                <th>Title & Location</th>
+                <th>Assigned Dept</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="authorityTableBody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: ANALYTICS & KPIS -->
+    <section id="tab-analytics" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fa-solid fa-chart-column text-primary"></i> Municipal Infrastructure Performance Dashboard</h2>
+          <span class="badge badge-in-progress">Live Operational Benchmarks</span>
+        </div>
+
+        <!-- KPI Metric Cards -->
+        <div class="grid-3" style="margin-bottom: 1.5rem;">
+          <div class="card" style="border-left: 4px solid #3b82f6; margin-bottom: 0;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">TOTAL REPORTED INCIDENTS</span>
+            <h3 id="kpiTotal" style="font-size: 2rem; color: #1e3a8a; margin: 0.5rem 0 0;">4</h3>
+          </div>
+          <div class="card" style="border-left: 4px solid #f59e0b; margin-bottom: 0;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">ACTIVE REPAIR ORDERS</span>
+            <h3 id="kpiOpen" style="font-size: 2rem; color: #b45309; margin: 0.5rem 0 0;">3</h3>
+          </div>
+          <div class="card" style="border-left: 4px solid #10b981; margin-bottom: 0;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">VERIFIED RESOLUTIONS</span>
+            <h3 id="kpiResolved" style="font-size: 2rem; color: #047857; margin: 0.5rem 0 0;">1</h3>
+          </div>
+          <div class="card" style="border-left: 4px solid #8b5cf6; margin-bottom: 0;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">SLA COMPLIANCE RATE</span>
+            <h3 id="kpiSLA" style="font-size: 2rem; color: #6d28d9; margin: 0.5rem 0 0;">92.5%</h3>
+          </div>
+          <div class="card" style="border-left: 4px solid #06b6d4; margin-bottom: 0;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: #64748b;">MEAN TIME TO RESOLVE (MTTR)</span>
+            <h3 id="kpiMTTR" style="font-size: 2rem; color: #0e7490; margin: 0.5rem 0 0;">38.4 hrs</h3>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card" style="margin-bottom: 0;">
+            <h4 style="margin-bottom: 1rem; font-size: 1rem; color: #1e293b;"><i class="fa-solid fa-list-check"></i> Incidents by Infrastructure Category</h4>
+            <div id="chartCategoryList" style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+          <div class="card" style="margin-bottom: 0;">
+            <h4 style="margin-bottom: 1rem; font-size: 1rem; color: #1e293b;"><i class="fa-solid fa-city"></i> Ward-wise Incident Density</h4>
+            <div id="chartWardList" style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: Update Status / Dispatch Work Order -->
+  <div class="modal-overlay" id="authorityModal">
+    <div class="modal-box">
+      <button class="modal-close" id="btnCloseAuthModal">&times;</button>
+      <h3 style="font-size: 1.25rem; color: #0f172a; margin-bottom: 0.5rem;"><i class="fa-solid fa-pen-to-square"></i> Triage & Status Update</h3>
+      <p id="modalTicketSubtitle" style="font-size: 0.85rem; color: #64748b; margin-bottom: 1.25rem;">Ticket: PIDR-2026-0001</p>
+
+      <form id="authUpdateForm">
+        <input type="hidden" id="modalTicketNumber" name="ticket_number">
+
+        <div class="form-group">
+          <label for="modalStatus">Target Status *</label>
+          <select id="modalStatus" name="status" class="form-control" required>
+            <option value="Acknowledged">Acknowledged (Department Notified)</option>
+            <option value="In Progress">In Progress (Field Team Dispatched)</option>
+            <option value="Resolved">Resolved (Repair Completed)</option>
+            <option value="Rejected">Rejected (Not within Municipality Mandate / Duplicate)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="modalEngineer">Assigned Field Engineer / Contractor</label>
+          <input type="text" id="modalEngineer" name="assigned_engineer" class="form-control" placeholder="e.g. Er. Sunil Verma (Roads Section)">
+        </div>
+
+        <div class="form-group">
+          <label for="modalNotes">Operational Remarks / Resolution Notes</label>
+          <textarea id="modalNotes" name="resolution_notes" class="form-control" rows="3" placeholder="Enter work order details, asphalt batch specs, or resolution details..."></textarea>
+        </div>
+
+        <div class="form-group" id="afterPhotoGroup">
+          <label><i class="fa-solid fa-camera-retro"></i> Post-Repair Verification Photo (Mandatory for 'Resolved')</label>
+          <input type="file" id="modalAfterPhoto" name="after_photo" accept="image/*" class="form-control">
+          <small style="color: #64748b;">Upload photographic proof of repaired infrastructure for citizen audit.</small>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-secondary" id="btnCancelAuthModal">Cancel</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> Commit Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Submission Success -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-box" style="text-align: center;">
+      <div style="width: 60px; height: 60px; border-radius: 50%; background: #dcfce7; color: #16a34a; font-size: 2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h3 style="font-size: 1.4rem; color: #0f172a; margin-bottom: 0.5rem;">Complaint Registered Successfully!</h3>
+      <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 1rem;">
+        Your report has been logged and auto-routed to the respective department control room.
+      </p>
+      <div style="background: #f1f5f9; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+        <span style="font-size: 0.8rem; color: #64748b; text-transform: uppercase; font-weight: 700;">Unique Tracking ID</span>
+        <h2 id="successTicketId" style="font-size: 1.75rem; color: #1e3a8a; letter-spacing: 0.05em; margin-top: 0.25rem;">PIDR-2026-0005</h2>
+      </div>
+      <div style="display: flex; gap: 0.5rem; justify-content: center;">
+        <button type="button" class="btn btn-secondary" id="btnSuccessClose">Report Another</button>
+        <button type="button" class="btn btn-primary" id="btnSuccessTrack"><i class="fa-solid fa-magnifying-glass"></i> Track Status Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div style="max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <strong>Public Infrastructure Damage Reporting System (PIDR)</strong> &copy; 2026.
+        Collaborating Organization: <em>Unified Mentor</em>.
+      </div>
+      <div>
+        Designed for Municipal Civic Transparency | Built with FastAPI, SQLite, and Leaflet.js
+      </div>
+    </div>
+  </footer>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Application JS -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

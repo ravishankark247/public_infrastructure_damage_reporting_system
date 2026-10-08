@@ -1,0 +1,461 @@
+/* Public Infrastructure Damage Reporting System - Modern Responsive Styles */
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #3b82f6;
+  --primary-dark: #172554;
+  --secondary: #0d9488;
+  --danger: #dc2626;
+  --warning: #f59e0b;
+  --success: #16a34a;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: #f8fafc;
+  color: #1e293b;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  background: #3b82f6;
+  color: white;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.logo-title h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.logo-title p {
+  font-size: 0.8rem;
+  color: #93c5fd;
+}
+
+nav.nav-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+nav.nav-tabs button {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+nav.nav-tabs button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+nav.nav-tabs button.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+main.main-content {
+  max-width: 1280px;
+  width: 100%;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+  flex: 1;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* Card Containers */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Grid Layouts */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 860px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.4rem;
+}
+
+.form-control, select.form-control, textarea.form-control {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #0f172a;
+  background-color: white;
+  transition: border-color 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #1e3a8a;
+  color: white;
+}
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-secondary {
+  background-color: #e2e8f0;
+  color: #334155;
+}
+.btn-secondary:hover {
+  background-color: #cbd5e1;
+}
+
+.btn-success {
+  background-color: #16a34a;
+  color: white;
+}
+.btn-success:hover {
+  background-color: #15803d;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-low { background: #e0f2fe; color: #0369a1; }
+.badge-medium { background: #fef3c7; color: #b45309; }
+.badge-high { background: #fed7aa; color: #c2410c; }
+.badge-critical { background: #fee2e2; color: #b91c1c; }
+
+.badge-submitted { background: #f1f5f9; color: #475569; }
+.badge-acknowledged { background: #e0e7ff; color: #4338ca; }
+.badge-in-progress { background: #fef08a; color: #854d0e; }
+.badge-resolved { background: #dcfce7; color: #15803d; }
+.badge-rejected { background: #fecdd3; color: #be123c; }
+
+/* Status Stepper */
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0 2rem;
+  position: relative;
+}
+
+.stepper::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  left: 30px;
+  right: 30px;
+  height: 4px;
+  background: #e2e8f0;
+  z-index: 1;
+}
+
+.step {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  flex: 1;
+}
+
+.step-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid #cbd5e1;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin: 0 auto 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.step.active .step-circle {
+  border-color: #3b82f6;
+  background: #3b82f6;
+  color: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.step.completed .step-circle {
+  border-color: #16a34a;
+  background: #16a34a;
+  color: white;
+}
+
+.step-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.step.active .step-label {
+  color: #1e3a8a;
+  font-weight: 700;
+}
+
+/* Map Containers */
+#reportMap, #liveMap {
+  width: 100%;
+  height: 360px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  z-index: 1;
+}
+
+#liveMap {
+  height: 520px;
+}
+
+/* Image Upload Preview */
+.upload-dropzone {
+  border: 2px dashed #94a3b8;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.upload-dropzone:hover {
+  border-color: #3b82f6;
+  background: #f0f7ff;
+}
+
+.preview-container {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.preview-img {
+  max-width: 140px;
+  max-height: 100px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  object-fit: cover;
+}
+
+/* Tables */
+.table-responsive {
+  overflow-x: auto;
+}
+
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+table.data-table th {
+  background: #f1f5f9;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  color: #334155;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+table.data-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+table.data-table tr:hover {
+  background: #f8fafc;
+}
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-box {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  padding: 1.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #64748b;
+}
+
+/* Footer */
+footer {
+  background: #0f172a;
+  color: #94a3b8;
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: auto;
+}
+
+footer a {
+  color: #60a5fa;
+  text-decoration: none;
+}

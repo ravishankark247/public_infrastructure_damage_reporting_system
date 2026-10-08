@@ -5,7 +5,7 @@ set "PROJECT_DIR=%~dp0"
 set "HOST=%HOST:=%"
 if "%HOST%"=="" set "HOST=127.0.0.1"
 set "PORT=%PORT:=%"
-if "%PORT%"=="" set "PORT=8000"
+if "%PORT%"=="" set "PORT=8011"
 set "VENV_DIR=%PROJECT_DIR%.venv"
 
 if not exist "%VENV_DIR%\Scripts\python.exe" (

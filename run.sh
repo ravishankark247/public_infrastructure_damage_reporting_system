@@ -5,7 +5,7 @@ PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$PROJECT_DIR"
 
 HOST="${HOST:-127.0.0.1}"
-PORT="${PORT:-8000}"
+PORT="${PORT:-8011}"
 VENV_DIR="$PROJECT_DIR/.venv"
 
 if [ ! -d "$VENV_DIR" ]; then

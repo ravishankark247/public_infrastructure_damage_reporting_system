@@ -75,12 +75,12 @@ python app.py
 
 Or run directly using `uvicorn`:
 ```bash
-uvicorn app:app --host 127.0.0.1 --port 8000 --reload
+uvicorn app:app --host 127.0.0.1 --port 8011 --reload
 ```
 
 ### 3. Open in Browser
-Visit: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**  
-Interactive Swagger API Docs: **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)**
+Visit: **[http://127.0.0.1:8011](http://127.0.0.1:8011)**<br>
+Interactive Swagger API Docs: **[http://127.0.0.1:8011/docs](http://127.0.0.1:8011/docs)**
 
 ---
 
@@ -94,7 +94,7 @@ You can run this full-stack project in Google Colab without installing anything 
    - **Cell 1:** Installs dependencies (`fastapi`, `uvicorn`, `python-multipart`, `jinja2`, `nest_asyncio`, `pyngrok`).
    - **Cell 2:** Writes the complete application code, static assets, and templates.
    - **Cell 3:** Initializes the database and seeds demonstration civic complaints.
-   - **Cell 4:** Starts the FastAPI server as a background thread on port 8000.
+   - **Cell 4:** Starts the FastAPI server as a background thread on port 8011.
    - **Cell 5:** Provides an interactive inline view link via Google Colab proxy port or localtunnel.
    - **Cell 6:** Executes automated verification tests across all endpoints.
 

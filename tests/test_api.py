@@ -16,6 +16,14 @@ def client(tmp_path, monkeypatch):
         yield test_client
 
 
+def test_homepage_serves_html(client):
+    response = client.get("/")
+
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/html")
+    assert "CivicPulse PIDR" in response.text
+
+
 def test_meta_endpoint_returns_data(client):
     response = client.get("/api/v1/meta")
 

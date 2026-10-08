@@ -358,8 +358,26 @@ async def get_kpis():
         "by_status": by_status
     }
 
+def is_port_in_use(host: str, port: int) -> bool:
+    import socket
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.settimeout(1)
+        try:
+            sock.connect((host, port))
+            return True
+        except OSError:
+            return False
+
+
 if __name__ == "__main__":
     import uvicorn
+
     host = os.getenv("HOST", "127.0.0.1")
     port = int(os.getenv("PORT", "8011"))
-    uvicorn.run("app:app", host=host, port=port, reload=True)
+    reload_mode = os.getenv("PIDR_RELOAD", "false").lower() == "true"
+
+    if is_port_in_use(host, port):
+        print(f"Application already running on http://{host}:{port}. Skipping startup.")
+    else:
+        uvicorn.run(app, host=host, port=port, reload=reload_mode)

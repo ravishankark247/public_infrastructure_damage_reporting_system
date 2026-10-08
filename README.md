@@ -82,6 +82,12 @@ uvicorn app:app --host 127.0.0.1 --port 8011 --reload
 Visit: **[http://127.0.0.1:8011](http://127.0.0.1:8011)**<br>
 Interactive Swagger API Docs: **[http://127.0.0.1:8011/docs](http://127.0.0.1:8011/docs)**
 
+### 4. Auto-run in VS Code
+This project now includes VS Code launch support for one-click startup:
+- Open the Command Palette and choose "Tasks: Run Task" -> "Start PIDR App"
+- Or press F5 and select "FastAPI: PIDR App"
+- The app will start on `127.0.0.1:8011` and avoid duplicate startup when already running
+
 ---
 
 ## ☁️ How to Run in Google Colab

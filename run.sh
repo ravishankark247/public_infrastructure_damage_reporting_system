@@ -19,5 +19,10 @@ echo "Installing project dependencies..."
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
+if curl -fsS "http://$HOST:$PORT" >/dev/null 2>&1; then
+  echo "Public Infrastructure Damage Reporting System is already running on http://$HOST:$PORT"
+  exit 0
+fi
+
 echo "Starting Public Infrastructure Damage Reporting System on http://$HOST:$PORT..."
 HOST="$HOST" PORT="$PORT" python app.py
